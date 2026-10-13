@@ -1,0 +1,8 @@
+title: Your headline here
+author: Your name
+section: Career spotlight
+issue: 2026-11
+---
+Paste the full article here.
+
+Leave a blank line between paragraphs.

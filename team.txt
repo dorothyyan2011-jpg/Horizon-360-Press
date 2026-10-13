@@ -1,0 +1,11 @@
+# One person per line. Add a role after a dash, for example:
+# Dorothy - Founder & Editor-in-Chief
+Dorothy
+Grace
+Kiera
+Audrey
+Noah
+Jessica
+Allison
+Clara
+Waverly

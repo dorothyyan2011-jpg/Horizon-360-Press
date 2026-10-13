@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="The Horizon 360 is a female student-run newspaper reporting on careers, industries, and the people who build them.">
+<meta property="og:title" content="The Horizon 360"><meta property="og:description" content="A female student-run newspaper. Explore every angle.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<title>The Horizon 360</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+[hidden]{display:none!important}
+html,body{margin:0}
+img{max-width:100%}
+/* Layout: soft pill tab bar with the club logo; one panel at a time. Home = sunrise hero with the logo in a round frame, wavy sea divider, four soft color cards, latest stories. Colors from the club logo; rounded and gentle but tidy. */
+:root{
+  --sand:#fbf3ea; --paper:#fffdf9; --bar:#fffdf9; --ink:#24324b; --ink-soft:#75685f; --line:#f0dfcc;
+  --sea:#2f5f9c; --sea-deep:#234c80; --sea-soft:#dce7f4; --peach:#f6ae8e; --peach-soft:#fde5d8; --coral:#c95a33; --cream:#fdf6ee;
+  --sun1:#fbe1ea; --sun2:#fcd5bd; --sun3:#f8b996;
+  --on-dark:#fffaf3; --on-peach:#2a1508; --danger:#b23a3a; --ok:#3d7c58; --shadow:0 6px 24px rgba(120,70,40,.08);
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --ui:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --sand:#111b2d; --paper:#18253b; --bar:#15213a; --ink:#f6eadc; --ink-soft:#bfb1a2; --line:#2c3c58;
+  --sun1:#2b2440; --sun2:#3b2b3c; --sun3:#4b3030; --sea:#93b6e6; --sea-deep:#2a5793; --sea-soft:#1f3150; --peach:#f6ae8e; --peach-soft:#3a2a2a; --coral:#f6a07a; --cream:#1b2943;
+  --danger:#ef8a8a; --ok:#76c99a; --shadow:0 6px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --sand:#111b2d; --paper:#18253b; --bar:#15213a; --ink:#f6eadc; --ink-soft:#bfb1a2; --line:#2c3c58;
+  --sun1:#2b2440; --sun2:#3b2b3c; --sun3:#4b3030; --sea:#93b6e6; --sea-deep:#2a5793; --sea-soft:#1f3150; --peach:#f6ae8e; --peach-soft:#3a2a2a; --coral:#f6a07a; --cream:#1b2943;
+  --danger:#ef8a8a; --ok:#76c99a; --shadow:0 6px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--sand);color:var(--ink);font-family:var(--ui);font-size:1.05rem;line-height:1.55}
+.in{max-width:70rem;margin-inline:auto;padding-inline:16px}
+a{color:var(--sea)}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:8px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;letter-spacing:-.015em;margin:0;text-wrap:balance}
+h1{font-weight:600;letter-spacing:-.02em}
+p{margin:0}
+.eyebrow{font-weight:800;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);display:inline-flex;align-items:center;gap:.4rem}
+.eyebrow::before{content:"";width:1.4rem;height:2px;background:currentColor;border-radius:2px}
+
+/* ---------- logo ---------- */
+.logo{border-radius:50%;overflow:hidden;display:block;flex:0 0 auto;background:var(--cream)}
+.logo img{width:100%;height:100%;object-fit:cover;display:block}
+.logo svg{width:100%;height:100%;display:block}
+.logo .arc{font-family:var(--display);font-size:26px;letter-spacing:3px;fill:var(--coral)}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bar);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.top .in{display:flex;align-items:center;gap:1rem;min-height:72px;flex-wrap:wrap;padding-block:.5rem}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.brand .logo{width:48px;height:48px;box-shadow:0 0 0 2px var(--line)}
+.brand b{font-family:var(--display);font-weight:700;font-size:1.3rem;line-height:1;letter-spacing:-.01em}
+.brand b span{color:var(--coral)}
+.brand-txt{display:grid;gap:.2rem}
+.brand-txt small{font-family:var(--ui);font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.tabs{display:flex;gap:.25rem;margin-inline:auto;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:.3rem;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{font-weight:700;font-size:.98rem;text-decoration:none;color:var(--ink-soft);padding:.5rem 1.05rem;border-radius:999px;white-space:nowrap}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-current="page"]{background:var(--paper);color:var(--coral);box-shadow:0 2px 8px rgba(120,70,40,.12)}
+@media (max-width:760px){.tabs{order:3;margin-inline:0;flex-basis:100%}.top .aa{margin-left:auto}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:var(--ui);font-weight:800;font-size:.98rem;text-decoration:none;cursor:pointer;border-radius:999px;padding:.65rem 1.25rem;border:2px solid transparent;min-height:44px;white-space:nowrap}
+.btn.coral{background:var(--coral);color:var(--on-dark)}
+.btn.peach{background:var(--peach);color:var(--on-peach)}
+.btn.ghost{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn.line{background:transparent;border-color:var(--line);color:var(--ink-soft);font-weight:700}
+.btn.danger{background:transparent;border-color:var(--danger);color:var(--danger)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+
+/* ---------- home ---------- */
+.hero{background:linear-gradient(180deg,var(--cream),var(--peach-soft));overflow-x:clip}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:2rem;align-items:center;padding-block:clamp(2.5rem,7vw,5rem) 1rem}
+@media (max-width:760px){.hero .in{grid-template-columns:1fr;text-align:center;justify-items:center}}
+.hero h1{font-size:clamp(2.8rem,8vw,5.4rem);margin-block:.6rem}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--coral)}
+.hero p{font-size:1.06rem;color:var(--ink);max-width:50ch;line-height:1.65}
+.hero .hero-mission{border-left:3px solid var(--coral);padding-left:1rem;text-align:left}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+@media (max-width:760px){.hero .ctas{justify-content:center}}
+.hero .frame{position:relative;width:min(20rem,70vw);aspect-ratio:1;max-width:100%;justify-self:center}
+.hero .frame .logo{width:100%;height:100%;box-shadow:0 0 0 10px var(--paper),0 18px 40px rgba(120,70,40,.18)}
+.spark{position:absolute;color:var(--coral);font-size:1.6rem;line-height:1}
+.spark.s1{top:4%;left:-4%}.spark.s2{bottom:12%;right:-6%;font-size:1.1rem;color:var(--sea)}.spark.s3{top:-2%;right:12%;font-size:1rem}
+.waves{display:block;width:100%;height:46px}
+.waves .w1{fill:var(--sea-deep)}.waves .w2{fill:var(--sand)}
+
+.section{padding-block:clamp(2.5rem,6vw,3.75rem)}
+.head{display:grid;gap:.4rem;margin-bottom:1.75rem}
+.head h2{font-size:clamp(2rem,5vw,2.8rem)}
+.head p{color:var(--ink-soft)}
+
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.cards{grid-template-columns:1fr}}
+.tile{display:grid;align-content:start;gap:.7rem;padding:1.5rem 1.35rem;border-radius:22px;text-decoration:none;min-height:13.5rem;box-shadow:var(--shadow);transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile.dark{background:var(--sea-deep);color:var(--on-dark)}
+.tile.lite{background:var(--peach);color:var(--on-peach)}
+.tile h3{font-size:1.55rem}
+.tile .go{margin-top:auto;font-weight:800}
+.ico{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--paper)}
+.ico svg{width:26px;height:26px;stroke:var(--coral);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.latest{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:860px){.latest{grid-template-columns:1fr}}
+.mini{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.3rem;display:grid;gap:.7rem;min-width:0;box-shadow:var(--shadow)}
+.mini h3{font-size:1.3rem}
+
+/* ---------- inner page header ---------- */
+.pagehead{background:linear-gradient(180deg,var(--cream),var(--peach-soft));text-align:center}
+.pagehead .in{padding-block:2.5rem 1.25rem;display:grid;gap:.5rem;justify-items:center}
+.pagehead h1{font-size:clamp(2.4rem,7vw,3.8rem)}
+.pagehead p{color:var(--ink-soft);font-size:1.1rem}
+
+/* ---------- articles ---------- */
+.listenbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem .8rem;margin-block:.5rem 1.5rem;font-size:.95rem;color:var(--ink-soft)}
+.listenbar label{font-weight:700;font-size:.85rem}
+select,input,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:.55rem .75rem;width:100%}
+.listenbar select{width:auto;font-size:.95rem}
+.articles{display:grid;gap:1.1rem;max-width:48rem;margin-inline:auto}
+article{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.5rem;display:grid;gap:.65rem;min-width:0;box-shadow:var(--shadow)}
+article h3{font-size:1.7rem}
+.meta{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;font-size:.85rem;color:var(--ink-soft)}
+.chip{font-weight:800;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;background:var(--peach-soft);color:var(--coral);border-radius:999px;padding:.2rem .65rem}
+.body{font-family:var(--body);font-size:1.15rem;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;max-width:65ch}
+.body.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.btn.listen[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.empty{max-width:48rem;margin-inline:auto;background:var(--paper);border:2px dashed var(--line);border-radius:22px;padding:2.5rem 1.25rem;text-align:center;color:var(--ink-soft);display:grid;justify-items:center;gap:.5rem}
+.empty .logo{width:84px;height:84px}
+.empty strong{font-family:var(--display);font-weight:600;color:var(--ink);font-size:1.4rem}
+
+/* ---------- post ---------- */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.5rem;display:grid;gap:1rem;max-width:48rem;margin:0 auto 1.25rem;box-shadow:var(--shadow)}
+.panel h2{font-size:1.5rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:560px){.row{grid-template-columns:1fr}}
+.field{display:grid;gap:.3rem;min-width:0}
+.field > span{font-weight:800;font-size:.95rem}
+.hint{font-size:.88rem;color:var(--ink-soft)}
+textarea{font-family:var(--body);min-height:14rem;resize:vertical;line-height:1.6}
+.status{font-weight:700;font-size:.9rem;min-height:1.2em}
+.status.err{color:var(--danger)} .status.ok{color:var(--ok)}
+.logoedit{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.logoedit .logo{width:84px;height:84px;box-shadow:0 0 0 2px var(--line)}
+
+/* ---------- about ---------- */
+.mission{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(1.5rem,4vw,2.5rem);max-width:48rem;margin-inline:auto;text-align:center;box-shadow:var(--shadow);display:grid;gap:.9rem;justify-items:center}
+.mission p{font-family:var(--display);font-size:clamp(1.25rem,3vw,1.6rem);line-height:1.4}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;max-width:48rem;margin:1.25rem auto 0}
+@media (max-width:640px){.how{grid-template-columns:1fr}}
+.how div{border-radius:22px;padding:1.4rem;display:grid;gap:.2rem;text-align:center}
+.how div:nth-child(1){background:var(--sea-soft)}
+.how div:nth-child(2){background:var(--peach-soft)}
+.how div:nth-child(3){background:var(--sea-soft)}
+.how b{font-family:var(--display);font-weight:600;font-size:2rem;color:var(--coral);line-height:1.1}
+.how span{font-weight:700}
+
+/* ---------- team ---------- */
+.team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;max-width:44rem;margin-inline:auto}
+@media (max-width:760px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.member{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.5rem 1rem;display:grid;justify-items:center;gap:.7rem;box-shadow:var(--shadow)}
+.avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:1.9rem}
+.member:nth-child(odd) .avatar{background:var(--sea-deep);color:var(--on-dark)}
+.member:nth-child(even) .avatar{background:var(--peach);color:var(--on-peach)}
+.member b{font-weight:800;font-size:1.1rem}
+
+/* ---------- approach + cta + contact ---------- */
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;border-top:2px solid var(--ink);padding-top:1.5rem}
+@media (max-width:760px){.pillars{grid-template-columns:1fr;gap:1.25rem}}
+.pillars h3{font-size:1.35rem;margin-bottom:.4rem}
+.pillars p{color:var(--ink-soft)}
+.cta{background:var(--sea-deep);color:var(--on-dark);border-radius:22px;padding:clamp(1.5rem,4vw,2.5rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem}
+.cta h2{font-size:clamp(1.6rem,4vw,2.2rem)}
+.cta p{opacity:.9;margin-top:.4rem;max-width:44ch}
+.ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;max-width:60rem;margin-inline:auto}
+@media (max-width:760px){.ways{grid-template-columns:1fr}}
+.way{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.5rem;display:grid;gap:.5rem;align-content:start;box-shadow:var(--shadow)}
+.way h3{font-size:1.35rem}
+.way p{color:var(--ink-soft)}
+.reach{max-width:60rem;margin:1.25rem auto 0;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.5rem;display:grid;gap:1rem;box-shadow:var(--shadow)}
+.reach-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;border-top:1px solid var(--line);padding-top:1rem}
+.reach-row:first-of-type{border-top:0;padding-top:0}
+.reach-row b{display:block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral)}
+.reach-row .val{font-size:1.15rem;font-weight:700;overflow-wrap:anywhere;user-select:all}
+.member .role{font-size:.88rem;color:var(--ink-soft);text-align:center}
+.member.lead{grid-column:1/-1;max-width:20rem;justify-self:center;width:100%}
+textarea.short{min-height:9rem;font-family:var(--ui)}
+
+/* ---------- editions ---------- */
+.issues{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:1.25rem;max-width:62rem;margin-inline:auto}
+.edition{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1rem;display:grid;gap:.6rem;align-content:start;box-shadow:var(--shadow);min-width:0}
+.edition h3{font-size:1.3rem}
+.edition .when{font-size:.85rem;color:var(--ink-soft)}
+.cover{aspect-ratio:8.5/11;width:100%;max-width:100%;background:var(--cream);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;place-items:center;color:var(--ink-soft);font-size:.9rem;cursor:pointer;padding:0}
+.cover canvas{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.feature{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:1.5rem;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:1.25rem;box-shadow:var(--shadow);margin-bottom:1.25rem}
+@media (max-width:620px){.feature{grid-template-columns:1fr}}
+.feature h3{font-size:clamp(1.6rem,4vw,2.2rem)}
+.feature .copy{display:grid;gap:.6rem;justify-items:start}
+.reader{position:fixed;inset:0;z-index:50;background:var(--sand);display:grid;grid-template-rows:auto 1fr}
+.reader-bar{display:flex;align-items:center;gap:.75rem;padding:calc(.6rem + env(safe-area-inset-top,0px)) 16px .6rem;background:var(--bar);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.reader-bar h2{font-size:1.15rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.reader-bar .pc{font-size:.85rem;color:var(--ink-soft);white-space:nowrap}
+.pages{overflow:auto;padding:1.25rem 16px calc(2.5rem + env(safe-area-inset-bottom,0px));display:grid;gap:1.25rem;justify-items:center;align-content:start}
+.pages canvas{width:100%;max-width:56rem;height:auto;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.12);border-radius:4px}
+.pages .loading{color:var(--ink-soft);padding:2rem}
+.meter{font-size:.88rem;color:var(--ink-soft)}
+.meter b{color:var(--ink)}
+.or{font-size:.85rem;color:var(--ink-soft);text-align:center}
+
+/* ---------- decorations ---------- */
+.deco{position:absolute;pointer-events:none;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.d-birds{width:72px;top:2%;left:-14%;color:var(--sea)}
+.d-plane{width:92px;top:-6%;right:-16%;color:var(--coral)}
+.d-pencil{width:46px;bottom:4%;left:-10%;color:var(--coral);transform:rotate(-24deg)}
+.d-dots{width:54px;bottom:-4%;right:-6%;color:var(--sea)}
+@media (max-width:760px){.d-birds{left:-4%}.d-plane{right:-6%}.d-pencil{left:0}.d-dots{right:0}}
+.d-plane{animation:drift 6s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(-6px,6px) rotate(-3deg)}}
+@media (prefers-reduced-motion:reduce){.d-plane{animation:none}}
+.divider{display:flex;align-items:center;justify-content:center;gap:.9rem;color:var(--coral);padding-block:.25rem 2.25rem}
+.divider::before,.divider::after{content:"";height:1px;flex:0 1 9rem;background:var(--line)}
+.divider svg{width:58px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.pill-ico{width:46px;height:46px;border-radius:50%;background:var(--peach-soft);display:grid;place-items:center;margin-bottom:.8rem}
+.pill-ico svg{width:24px;height:24px;fill:none;stroke:var(--coral);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cta{position:relative;overflow:hidden}
+.cta > *{position:relative;z-index:1}
+.cta .cta-deco{position:absolute;z-index:0;right:9rem;top:50%;transform:translateY(-50%) rotate(-8deg);width:150px;color:var(--peach);opacity:.35}
+@media (max-width:640px){.cta .cta-deco{right:-1rem;top:1rem;transform:rotate(-8deg);width:110px}}
+.foot-birds{width:40px;color:var(--peach);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;vertical-align:middle;margin-left:.4rem}
+html[data-calm] .deco,html[data-calm] .divider svg,html[data-calm] .cta-deco,html[data-calm] .foot-birds{display:none}
+
+.hero h1 em{position:relative;white-space:nowrap}
+.squig{position:absolute;left:0;right:0;bottom:-.18em;width:100%;height:.32em;color:var(--peach);fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;pointer-events:none}
+.pagehead{position:relative;overflow:hidden}
+.ph-deco{position:absolute;pointer-events:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ph-sun{width:54px;right:max(16px,calc(50% - 26rem));top:1.4rem;color:var(--coral)}
+.ph-birds{width:70px;left:max(16px,calc(50% - 26rem));top:2.2rem;color:var(--sea)}
+.ph-star{width:18px;color:var(--coral)}
+.ph-star.a{left:max(48px,calc(50% - 20rem));bottom:1.2rem}
+.ph-star.b{right:max(70px,calc(50% - 19rem));bottom:2rem;width:13px;color:var(--sea)}
+.ph-wave{position:absolute;left:0;right:0;bottom:0;width:100%;height:14px;color:var(--peach);opacity:.6}
+@media (max-width:560px){.ph-sun{width:40px;top:.8rem}.ph-birds{width:52px;top:1rem}}
+.head{position:relative}
+.head-doodle{position:absolute;right:0;bottom:.2rem;width:64px;color:var(--coral);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:560px){.head-doodle{width:46px}}
+.way .w-ico{width:46px;height:46px;border-radius:50%;background:var(--peach-soft);display:grid;place-items:center}
+.way .w-ico svg{width:24px;height:24px;fill:none;stroke:var(--coral);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cards{position:relative}
+.cards-star{position:absolute;width:22px;top:-2.6rem;right:2%;color:var(--sea);fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.cards-star.two{right:calc(2% + 30px);top:-1.6rem;width:14px;color:var(--coral)}
+html[data-calm] .squig,html[data-calm] .ph-deco,html[data-calm] .ph-wave,html[data-calm] .head-doodle,html[data-calm] .cards-star{display:none}
+
+/* ---------- background bands + fixes ---------- */
+.hero{background-image:radial-gradient(circle,var(--line) 1.2px,transparent 1.6px),linear-gradient(180deg,var(--cream),var(--peach-soft));background-size:22px 22px,auto}
+.band{color:var(--sea-soft);margin-top:1rem}
+.band-edge{display:block;width:100%;height:30px;fill:currentColor}
+.band-edge.bottom{transform:scale(-1,-1)}
+.band-body{background:var(--sea-soft);color:var(--ink);padding-top:2.5rem}
+.band-body .divider{padding-bottom:1.75rem}
+.band-body .divider::before,.band-body .divider::after{background:var(--paper)}
+.band-body .pill-ico{background:var(--paper)}
+.band-body .section{padding-bottom:2.5rem}
+.hero h1{padding-bottom:.12em}
+.squig{bottom:-.08em}
+.d-pencil{left:-20%;bottom:-2%}
+.head:has(.head-doodle) h2{padding-right:76px}
+@media (max-width:760px){
+  .d-pencil,.d-dots,.cards-star,.cta .cta-deco{display:none}
+  .d-birds{left:-8%;top:-4%}
+  .head:has(.head-doodle) h2{padding-right:56px}
+}
+.hero-mission .hm-label{display:block;font-family:var(--ui);font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);opacity:1;margin-bottom:.35rem}
+/* sunset backgrounds */
+.hero{background-image:radial-gradient(circle,rgba(201,90,51,.10) 1.1px,transparent 1.6px),radial-gradient(circle at 76% 64%,rgba(246,160,120,.55),transparent 40%),linear-gradient(180deg,var(--sun1) 0%,var(--sun2) 55%,var(--sun3) 100%);background-size:22px 22px,auto,auto}
+.pagehead{background:linear-gradient(180deg,var(--sun1),var(--sun2))}
+.tile.lite{background:linear-gradient(155deg,rgba(248,185,150,.97),rgba(242,146,124,.9) 60%,rgba(222,150,182,.86));color:var(--on-peach)}
+.cta{background:radial-gradient(circle at 92% 130%,rgba(246,160,120,.65),transparent 55%),radial-gradient(circle at 70% 140%,rgba(222,150,182,.45),transparent 50%),var(--sea-deep)}
+.feature,.mini,article{background-image:linear-gradient(180deg,rgba(252,213,189,.18),transparent 40%)}
+html[data-calm] .hero{background-image:none}
+html[data-calm] .band-body{background:var(--sand)}
+html[data-calm] .band{color:var(--sand)}
+
+/* ---------- reading settings ---------- */
+.aa{position:relative}
+.aa-btn{font-family:var(--display);font-size:1.05rem;padding:.5rem .9rem;background:var(--cream);border-color:var(--line);color:var(--ink)}
+.aa-btn[aria-expanded="true"]{background:var(--ink);color:var(--paper)}
+.aa-panel{position:absolute;right:0;top:calc(100% + .5rem);width:min(21rem,calc(100vw - 32px));background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1.1rem;display:grid;gap:1rem;box-shadow:0 12px 36px rgba(0,0,0,.16);z-index:20}
+.aa-panel h2{font-size:1.15rem}
+.opt{display:grid;gap:.4rem}
+.opt > span{font-weight:800;font-size:.9rem}
+.seg{display:flex;gap:.25rem;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:.25rem}
+.seg button{flex:1;border:0;background:transparent;color:var(--ink-soft);font:inherit;font-weight:700;font-size:.92rem;padding:.45rem .5rem;border-radius:999px;cursor:pointer;min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--paper);color:var(--coral);box-shadow:0 2px 8px rgba(120,70,40,.12)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.switch small{display:block;color:var(--ink-soft);font-size:.82rem;font-weight:500}
+.switch button{flex:0 0 auto;width:56px;height:32px;border-radius:999px;border:0;background:var(--line);position:relative;cursor:pointer}
+.switch button::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .15s}
+.switch button[aria-checked="true"]{background:var(--coral)}
+.switch button[aria-checked="true"]::after{left:28px}
+html[data-size="l"]{font-size:112.5%}
+html[data-size="xl"]{font-size:128%}
+html[data-spacing="wide"] body{line-height:1.85;letter-spacing:.02em;word-spacing:.1em}
+html[data-spacing="wide"] .body{line-height:2.05}
+html[data-spacing="wide"] p{max-width:60ch}
+html[data-font="easy"]{--display:"Atkinson Hyperlegible",Verdana,sans-serif;--ui:"Atkinson Hyperlegible",Verdana,sans-serif;--body:"Atkinson Hyperlegible",Verdana,sans-serif}
+html[data-font="easy"] h1,html[data-font="easy"] h2,html[data-font="easy"] h3{font-weight:700;letter-spacing:0}
+/* calm mode: no motion, flat surfaces, quieter color */
+html[data-calm] *{transition:none!important;animation:none!important}
+html[data-calm] .hero,html[data-calm] .pagehead{background:var(--sand)!important}
+html[data-calm] .waves{display:none}
+html[data-calm] .tile,html[data-calm] .tile.dark,html[data-calm] .tile.lite,html[data-calm] .cta{background:var(--paper)!important;color:var(--ink);border:1px solid var(--line)}
+html[data-calm] .tile:hover{transform:none}
+html[data-calm] .ico{background:var(--cream)}
+html[data-calm] .hero .frame .logo{box-shadow:0 0 0 2px var(--line)}
+html[data-calm] .top,html[data-calm] .mini,html[data-calm] article,html[data-calm] .edition,html[data-calm] .member,html[data-calm] .way,html[data-calm] .reach,html[data-calm] .panel,html[data-calm] .mission,html[data-calm] .feature{box-shadow:none}
+html[data-calm] .how div{background:var(--paper);border:1px solid var(--line)}
+html[data-calm] .member .avatar{background:var(--cream)!important;color:var(--ink)!important}
+html[data-calm] footer{background:var(--paper);color:var(--ink);border-top:1px solid var(--line)}
+html[data-calm] footer a{color:var(--ink)}
+
+footer{background:var(--sea-deep);color:var(--on-dark);margin-top:2.5rem}
+footer .in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;padding-block:1.5rem 2.5rem;font-size:.95rem}
+footer a{color:var(--on-dark)}
+.foot-brand{display:flex;align-items:center;gap:.6rem;font-family:var(--display)}
+.foot-brand .logo{width:36px;height:36px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="in">
+    <a class="brand" href="#home" aria-label="The Horizon 360 home">
+      <span class="logo" data-logo></span>
+      <span class="brand-txt"><b>The Horizon <span>360°</span></b><small>Student Newspaper</small></span>
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a href="#home" data-tab="home">Home</a>
+      <a href="#editions" data-tab="editions">Editions</a>
+      <a href="#articles" data-tab="articles">Articles</a>
+      <a href="#about" data-tab="about">About</a>
+      <a href="#team" data-tab="team">Team</a>
+      <a href="#contact" data-tab="contact">Contact</a>
+    </nav>
+    <div class="aa">
+      <button class="btn aa-btn" type="button" id="aaBtn" aria-expanded="false" aria-controls="aaPanel" aria-label="Reading settings">Aa</button>
+      <div class="aa-panel" id="aaPanel" hidden role="dialog" aria-label="Reading settings">
+        <h2>Reading settings</h2>
+        <div class="opt"><span id="lSize">Text size</span><div class="seg" role="group" aria-labelledby="lSize" data-key="size"><button type="button" data-v="">Normal</button><button type="button" data-v="l">Large</button><button type="button" data-v="xl">Larger</button></div></div>
+        <div class="opt"><span id="lSpace">Spacing</span><div class="seg" role="group" aria-labelledby="lSpace" data-key="spacing"><button type="button" data-v="">Normal</button><button type="button" data-v="wide">Relaxed</button></div></div>
+        <div class="opt"><span id="lFont">Font</span><div class="seg" role="group" aria-labelledby="lFont" data-key="font"><button type="button" data-v="">Standard</button><button type="button" data-v="easy">Easy-read</button></div></div>
+        <div class="switch"><span id="lCalm"><b>Calm mode</b><small>No motion, softer colors, fewer distractions</small></span><button type="button" role="switch" aria-checked="false" aria-labelledby="lCalm" id="calmSw"></button></div>
+        <button class="btn line" type="button" id="aaReset">Reset to default</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section data-panel="home">
+  <div class="hero"><div class="in">
+    <div>
+      <span class="eyebrow">A student-run newspaper</span>
+      <h1>Explore every <em>angle.<svg class="squig" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8q10-6 19 0t19 0 19 0 19 0 19 0 19 0"/></svg></em></h1>
+      <p class="hero-mission"><span class="hm-label">Our mission</span>The Horizon is a female student-run newspaper that empowers students to explore the fields shaping their futures and the world around them. Through partnerships with organizations and interviews with professionals, we uncover the realities of different industries, from well-known careers to lesser-known paths. Our goal is to help the next generation discover new possibilities and make informed decisions about their futures.</p>
+      <div class="ctas">
+        <a class="btn coral" href="#editions">Read the latest edition</a>
+        <a class="btn ghost" href="#about">Our mission</a>
+      </div>
+    </div>
+    <div class="frame">
+      <svg class="deco d-birds" viewBox="0 0 66 24" aria-hidden="true" stroke="currentColor"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg>
+      <svg class="deco d-plane" viewBox="0 0 92 64" aria-hidden="true" stroke="currentColor"><path d="M56 10l30-6-12 30-7-11z"/><path d="M86 4L67 23"/><path d="M54 32c-10 10-26 8-30 0s8-14 14-6-6 20-30 26" stroke-dasharray="3 5"/></svg>
+      <svg class="deco d-pencil" viewBox="0 0 24 64" aria-hidden="true" stroke="currentColor"><path d="M7 6h10v42l-5 10-5-10z"/><path d="M7 48h10M7 14h10"/></svg>
+      <svg class="deco d-dots" viewBox="0 0 54 30" aria-hidden="true" stroke="currentColor"><circle cx="6" cy="22" r="2.5"/><circle cx="22" cy="12" r="2.5"/><circle cx="40" cy="20" r="2.5"/><path d="M47 6l2 4 4 1-4 1-2 4-2-4-4-1 4-1z"/></svg>
+      <span class="logo" data-logo data-big></span>
+    </div>
+  </div></div>
+  <svg class="waves" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true">
+    <rect width="1200" height="46" class="w2"/>
+    <path class="w1" d="M0 0H1200V18C1100 34 1000 34 900 18S700 2 600 18 400 34 300 18 100 2 0 18Z"/>
+  </svg>
+
+  <div class="section"><div class="in">
+    <div class="head"><span class="eyebrow">What we publish</span><h2>A new edition every month</h2></div>
+    <div class="cards"><svg class="cards-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="cards-star two" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
+      <a class="tile dark" href="#editions">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h12v14H6a2 2 0 0 1-2-2z"/><path d="M16 9h4v8a2 2 0 0 1-2 2"/><path d="M7 9h6M7 12h6M7 15h4"/></svg></span>
+        <h3>Monthly Editions</h3><p>The complete paper each month, reported, edited, and designed by our staff.</p><span class="go">Browse editions →</span></a>
+      <a class="tile lite" href="#articles">
+        <span class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span>
+        <h3>Career Features</h3><p>Long-form reporting on established professions and lesser-known paths.</p><span class="go">Read articles →</span></a>
+      <a class="tile dark" href="#articles">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></span>
+        <h3>Audio Editions &amp; Calm Mode</h3><p>Every article is narrated for blind and low-vision readers. Calm mode and reading settings (the Aa button) make the site easier for autistic and dyslexic readers.</p><span class="go">Listen now →</span></a>
+      <a class="tile lite" href="#team">
+        <span class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19a6 6 0 0 1 12 0M14.5 19a4.5 4.5 0 0 1 6.5-4"/></svg></span>
+        <h3>Editorial Team</h3><p>An all-female staff of student reporters, editors, and designers.</p><span class="go">Meet the team →</span></a>
+      <a class="tile dark" href="#contact">
+        <span class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>
+        <h3>Events &amp; Fundraisers</h3><p>Community events and fundraisers that support our reporting and our readers.</p><span class="go">Get involved →</span></a>
+      <a class="tile lite" href="#contact">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M8 12l3 3 5-6"/><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg></span>
+        <h3>Partnerships</h3><p>Collaborations with organizations that open their industries to student readers.</p><span class="go">Partner with us →</span></a>
+    </div>
+  </div></div>
+
+  <div class="band">
+  <svg class="band-edge" viewBox="0 0 1200 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18C100 2 200 2 300 14S500 30 600 16 800 0 900 12 1100 28 1200 14V30H0Z"/></svg>
+  <div class="band-body">
+  <div class="divider" aria-hidden="true"><svg viewBox="0 0 58 30"><path d="M8 22a21 21 0 0 1 42 0"/><path d="M29 2v4M12 8l3 3M46 8l-3 3M2 22h54"/><path d="M6 27q4-3 8 0t8 0 8 0 8 0 8 0 8 0"/></svg></div>
+  <div class="section" style="padding-top:0"><div class="in">
+    <div class="head"><span class="eyebrow">Our approach</span><h2>Reporting that opens doors</h2><svg class="head-doodle" viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="24" r="18"/><path d="M32 10v3M32 35v3M18 24h3M43 24h3"/><path d="M38 18l-4 8-8 4 4-8z"/></svg></div>
+    <div class="pillars">
+      <div><span class="pill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></span><h3>Primary sources</h3><p>Our features draw on interviews with working professionals, so readers hear about a career from the people inside it.</p></div>
+      <div><span class="pill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 11a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg></span><h3>Partnerships</h3><p>We collaborate with organizations to give students direct access to industries they may never have considered.</p></div>
+      <div><span class="pill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/></svg></span><h3>Accessible by design</h3><p>Every article is published with a narrated audio edition, so blind and low-vision readers are never left out.</p></div>
+    </div>
+  </div></div>
+  </div>
+  <svg class="band-edge bottom" viewBox="0 0 1200 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18C100 2 200 2 300 14S500 30 600 16 800 0 900 12 1100 28 1200 14V30H0Z"/></svg>
+  </div>
+
+  <div class="section"><div class="in">
+    <div class="head"><span class="eyebrow">Latest</span><h2>Recent reporting</h2><svg class="head-doodle" viewBox="0 0 64 48" aria-hidden="true"><path d="M8 8h40v32H14a6 6 0 0 1-6-6z"/><path d="M48 16h8v18a6 6 0 0 1-6 6"/><path d="M14 16h12v10H14zM30 16h12M30 21h12M30 26h12M14 32h28"/></svg></div>
+    <div id="homeEdition"></div>
+    <div class="latest" id="latest"></div>
+    <div class="empty" id="latestEmpty"><span class="logo" data-logo></span><strong>First issue coming soon</strong></div>
+  </div></div>
+
+  <div class="section" style="padding-top:0"><div class="in">
+    <div class="cta">
+      <svg class="deco cta-deco" viewBox="0 0 92 64" aria-hidden="true" stroke="currentColor"><path d="M56 10l30-6-12 30-7-11z"/><path d="M86 4L67 23"/><path d="M54 32c-10 10-26 8-30 0s8-14 14-6-6 20-30 26" stroke-dasharray="3 5"/></svg>
+      <div><h2>Work with The Horizon</h2><p>We welcome professionals to interview, organizations to partner with, and story ideas from readers.</p></div>
+      <a class="btn peach" href="#contact">Get in touch</a>
+    </div>
+  </div></div>
+</section>
+
+<section data-panel="editions" hidden>
+  <div class="pagehead"><svg class="ph-deco ph-birds" viewBox="0 0 66 24" aria-hidden="true"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg><svg class="ph-deco ph-sun" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M8.7 8.7l2.8 2.8M28.5 28.5l2.8 2.8M8.7 31.3l2.8-2.8M28.5 11.5l2.8-2.8"/></svg><svg class="ph-deco ph-star a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-star b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0"/></svg><div class="in"><span class="eyebrow">The paper</span><h1>Editions</h1><p>Every monthly edition, page by page.</p></div></div>
+  <div class="section" style="padding-top:1.5rem"><div class="in">
+    <div class="issues" id="issues"></div>
+    <div class="empty" id="issuesEmpty"><span class="logo" data-logo></span><strong>First edition coming soon</strong></div>
+  </div></div>
+</section>
+
+<section data-panel="articles" hidden>
+  <div class="pagehead"><svg class="ph-deco ph-birds" viewBox="0 0 66 24" aria-hidden="true"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg><svg class="ph-deco ph-sun" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M8.7 8.7l2.8 2.8M28.5 28.5l2.8 2.8M8.7 31.3l2.8-2.8M28.5 11.5l2.8-2.8"/></svg><svg class="ph-deco ph-star a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-star b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0"/></svg><div class="in"><span class="eyebrow">The paper</span><h1>Articles</h1><p>Individual stories, each with an audio edition.</p></div></div>
+  <div class="in">
+    <div class="listenbar" role="group" aria-label="Read-aloud settings">
+      <label for="rate">Speed</label>
+      <select id="rate"><option value="0.8">Slow</option><option value="1" selected>Normal</option><option value="1.25">Fast</option></select>
+    </div>
+    <div class="articles" id="list" aria-live="polite"></div>
+    <div class="empty" id="empty"><span class="logo" data-logo></span><strong>First issue coming soon</strong></div>
+  </div>
+</section>
+
+
+
+<section data-panel="about" hidden>
+  <div class="pagehead"><svg class="ph-deco ph-birds" viewBox="0 0 66 24" aria-hidden="true"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg><svg class="ph-deco ph-sun" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M8.7 8.7l2.8 2.8M28.5 28.5l2.8 2.8M8.7 31.3l2.8-2.8M28.5 11.5l2.8-2.8"/></svg><svg class="ph-deco ph-star a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-star b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0"/></svg><div class="in"><span class="eyebrow">Who we are</span><h1>About us</h1></div></div>
+  <div class="section" style="padding-top:1.5rem"><div class="in">
+    <div class="mission">
+      <span class="eyebrow">Our mission</span>
+      <p>The Horizon is a female student-run newspaper that empowers students to explore the fields shaping their futures and the world around them. Through partnerships with organizations and interviews with professionals, we uncover the realities of different industries, from well-known careers to lesser-known paths. Our goal is to help the next generation discover new possibilities and make informed decisions about their futures.</p>
+    </div>
+    <div class="how">
+      <div><b>Every month</b><span>a new issue</span></div>
+      <div><b>Every week</b><span>an editorial meeting</span></div>
+      <div><b>Every article</b><span>published with audio</span></div>
+    </div>
+  </div></div>
+</section>
+
+<section data-panel="team" hidden>
+  <div class="pagehead"><svg class="ph-deco ph-birds" viewBox="0 0 66 24" aria-hidden="true"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg><svg class="ph-deco ph-sun" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M8.7 8.7l2.8 2.8M28.5 28.5l2.8 2.8M8.7 31.3l2.8-2.8M28.5 11.5l2.8-2.8"/></svg><svg class="ph-deco ph-star a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-star b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0"/></svg><div class="in"><span class="eyebrow">Masthead</span><h1>Editorial Team</h1><p>An all-female staff of student reporters, editors, and designers.</p></div></div>
+  <div class="section" style="padding-top:1.5rem"><div class="in"><div class="team" id="team"></div></div></div>
+</section>
+
+<section data-panel="contact" hidden>
+  <div class="pagehead"><svg class="ph-deco ph-birds" viewBox="0 0 66 24" aria-hidden="true"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg><svg class="ph-deco ph-sun" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M8.7 8.7l2.8 2.8M28.5 28.5l2.8 2.8M8.7 31.3l2.8-2.8M28.5 11.5l2.8-2.8"/></svg><svg class="ph-deco ph-star a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-star b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg><svg class="ph-deco ph-wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0"/></svg><div class="in"><span class="eyebrow">Contact</span><h1>Get in touch</h1><p>Interview requests, partnerships, and story ideas.</p></div></div>
+  <div class="section" style="padding-top:1.5rem"><div class="in">
+    <div class="ways">
+      <div class="way"><span class="w-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></span><span class="eyebrow">Professionals</span><h3>Be interviewed</h3><p>Share your career path with students deciding what comes next.</p></div>
+      <div class="way"><span class="w-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M9 11h.01M15 11h.01"/></svg></span><span class="eyebrow">Organizations</span><h3>Partner with us</h3><p>Help students see inside your industry through features and interviews.</p></div>
+      <div class="way"><span class="w-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span><span class="eyebrow">Readers</span><h3>Pitch a story</h3><p>Know a career, a person, or a question we should cover? Send it our way.</p></div>
+    </div>
+    <div class="reach" id="reach">
+      <div class="reach-row" id="emailRow" hidden><div><b>Email</b><span class="val" id="emailVal"></span></div><button class="btn ghost" type="button" id="copyEmail">Copy email</button></div>
+      <div class="reach-row"><div><b>Instagram</b><span class="val">@the.horizon_studentpress</span></div><a class="btn coral" href="https://www.instagram.com/the.horizon_studentpress/" target="_blank" rel="noopener">Message us</a></div>
+    </div>
+  </div></div>
+</section>
+</main>
+
+<div class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-labelledby="rTitle">
+  <div class="reader-bar"><h2 id="rTitle"></h2><span class="pc" id="rCount"></span><button class="btn ghost" type="button" id="rClose">Close</button></div>
+  <div class="pages" id="rPages"></div>
+</div>
+
+<footer><div class="in">
+  <span class="foot-brand"><span class="logo" data-logo></span>The Horizon 360 · A student-run newspaper<svg class="foot-birds" viewBox="0 0 66 24" aria-hidden="true"><path d="M4 14q6-7 11 0q5-7 11 0"/><path d="M34 6q4-5 8 0q4-5 8 0"/><path d="M52 18q3-4 6 0q3-4 6 0"/></svg></span>
+  <a href="https://www.instagram.com/the.horizon_studentpress/" target="_blank" rel="noopener">@the.horizon_studentpress</a>
+</div></footer>
+
+
+<script>
+const $=id=>document.getElementById(id);
+let DATA={articles:[],editions:[],team:[],contact:{},logo:null};
+
+// ---------- reading settings (saved on this device only) ----------
+const PREF_KEYS=["size","spacing","font","calm"];let PREFS={};
+try{PREFS=JSON.parse(localStorage.getItem("h360prefs")||"{}")||{}}catch(e){PREFS={}}
+function applyPrefs(){
+  const h=document.documentElement;
+  PREF_KEYS.forEach(k=>{const v=PREFS[k];if(v)h.setAttribute("data-"+k,v===true?"":v);else h.removeAttribute("data-"+k)});
+  document.querySelectorAll(".seg").forEach(g=>{const cur=PREFS[g.dataset.key]||"";g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===cur)))});
+  const sw=$("calmSw");if(sw)sw.setAttribute("aria-checked",String(!!PREFS.calm));
+}
+function savePrefs(){try{localStorage.setItem("h360prefs",JSON.stringify(PREFS))}catch(e){}applyPrefs()}
+applyPrefs();
+document.querySelectorAll(".seg").forEach(g=>g.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;PREFS[g.dataset.key]=b.dataset.v;savePrefs()}));
+$("calmSw").addEventListener("click",()=>{PREFS.calm=!PREFS.calm;savePrefs()});
+$("aaReset").addEventListener("click",()=>{PREFS={};savePrefs()});
+function setAa(open){$("aaPanel").hidden=!open;$("aaBtn").setAttribute("aria-expanded",String(open))}
+$("aaBtn").addEventListener("click",()=>setAa($("aaPanel").hidden));
+document.addEventListener("click",e=>{if(!$("aaPanel").hidden&&!e.target.closest(".aa"))setAa(false)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("aaPanel").hidden){setAa(false);$("aaBtn").focus()}});
+
+// ---------- logo ----------
+const DRAWN='<svg viewBox="0 0 240 240" role="img" aria-label="The Horizon logo"><defs><clipPath id="CID"><circle cx="120" cy="120" r="120"/></clipPath><path id="PID" d="M 34 130 A 86 86 0 0 1 206 130"/></defs><g clip-path="url(#CID)"><rect width="240" height="240" fill="var(--cream)"/><circle cx="120" cy="142" r="64" fill="var(--peach)"/><rect y="136" width="240" height="22" fill="var(--sea-deep)"/><rect y="158" width="240" height="90" fill="var(--peach-soft)"/></g>BIGTEXT</svg>';
+function paintLogos(){
+  document.querySelectorAll("[data-logo]").forEach((el,i)=>{
+    el.textContent="";
+    if(DATA.logo){const im=document.createElement("img");im.src=DATA.logo;im.alt="The Horizon logo";el.appendChild(im);return}
+    const big=el.hasAttribute("data-big");
+    el.innerHTML=DRAWN.replace(/CID/g,"c"+i).replace(/PID/g,"p"+i)
+      .replace("BIGTEXT",big?`<text class="arc"><textPath href="#p${i}" startOffset="50%" text-anchor="middle">THE HORIZON</textPath></text>`:"");
+  });
+}
+paintLogos();
+
+// ---------- tabs ----------
+function show(){
+  let t=(location.hash||"#home").slice(1);
+  if(!document.querySelector(`[data-panel="${t}"]`))t="home";
+  document.querySelectorAll("[data-panel]").forEach(p=>p.hidden=p.dataset.panel!==t);
+  document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.tab===t)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  window.scrollTo(0,0);
+  if(t==="articles")fixReadMore();
+}
+window.addEventListener("hashchange",show);
+
+// ---------- team + contact ----------
+function renderTeam(){
+  $("team").textContent="";
+  (DATA.team||[]).forEach((m,i)=>{
+    const d=document.createElement("div");d.className="member"+(i===0&&m.role?" lead":"");
+    const av=document.createElement("div");av.className="avatar";av.textContent=(m.name||"?")[0].toUpperCase();av.setAttribute("aria-hidden","true");
+    const b=document.createElement("b");b.textContent=m.name;d.append(av,b);
+    if(m.role){const r=document.createElement("span");r.className="role";r.textContent=m.role;d.appendChild(r)}
+    $("team").appendChild(d);
+  });
+  const em=(DATA.contact&&DATA.contact.email)||"";$("emailRow").hidden=!em;$("emailVal").textContent=em;
+}
+$("copyEmail").addEventListener("click",()=>{const t=$("emailVal").textContent,b=$("copyEmail");
+  const done=()=>{b.textContent="Copied";setTimeout(()=>b.textContent="Copy email",1800)};
+  try{navigator.clipboard.writeText(t).then(done,selectEmail)}catch(e){selectEmail()}});
+function selectEmail(){const r=document.createRange();r.selectNodeContents($("emailVal"));const s=getSelection();s.removeAllRanges();s.addRange(r)}
+
+// ---------- listen (Horizon voice) ----------
+let speakingId=null;
+try{const r=localStorage.getItem("h360rate");if(r)$("rate").value=r}catch(e){}
+const player=new Audio();player.preload="none";
+$("rate").addEventListener("change",()=>{try{localStorage.setItem("h360rate",$("rate").value)}catch(e){}player.playbackRate=parseFloat($("rate").value)||1});
+player.addEventListener("ended",()=>{speakingId=null;setListenLabels()});
+function setListenLabels(){document.querySelectorAll(".listen").forEach(b=>{const on=b.dataset.id===speakingId;b.setAttribute("aria-pressed",String(on));b.textContent=on?"■ Stop":"▶ Listen"})}
+function stopSpeech(){try{player.pause()}catch(e){}speakingId=null;setListenLabels()}
+function speak(a){
+  if(speakingId===a.id){stopSpeech();return}
+  stopSpeech();
+  player.src=a.audio;player.playbackRate=parseFloat($("rate").value)||1;
+  speakingId=a.id;setListenLabels();
+  player.play().catch(()=>{speakingId=null;setListenLabels()});
+}
+function listenBtn(a){
+  const b=document.createElement("button");b.type="button";
+  if(!a.audio){b.className="btn line";b.disabled=true;b.textContent="🎧 Voice coming soon";b.title="The audio edition is being recorded and will appear in a few minutes.";return b}
+  b.className="btn peach listen";b.dataset.id=a.id;b.setAttribute("aria-label",`Listen to ${a.title}`);b.onclick=()=>speak(a);return b;
+}
+
+// ---------- articles ----------
+function fmtIssue(m){if(!m)return"";const[y,mo]=m.split("-");if(!y||!mo)return m;return new Date(+y,+mo-1,1).toLocaleDateString(undefined,{month:"long",year:"numeric"})}
+function metaEl(a){
+  const meta=document.createElement("div");meta.className="meta";
+  if(a.category){const c=document.createElement("span");c.className="chip";c.textContent=a.category;meta.appendChild(c)}
+  const s=document.createElement("span");s.textContent=[a.author?`By ${a.author}`:"",fmtIssue(a.issue)].filter(Boolean).join(" · ");meta.appendChild(s);
+  return meta;
+}
+function render(){
+  const arts=DATA.articles||[];
+  const list=$("list");list.textContent="";$("empty").hidden=arts.length>0;
+  arts.forEach(a=>{
+    const el=document.createElement("article");el.id="a-"+a.id;el.setAttribute("aria-labelledby","t-"+a.id);
+    const h=document.createElement("h3");h.id="t-"+a.id;h.textContent=a.title;
+    const body=document.createElement("div");body.className="body clamp";body.id="b-"+a.id;body.textContent=a.body;
+    const acts=document.createElement("div");acts.className="actions";
+    const rd=document.createElement("button");rd.type="button";rd.className="btn line";rd.textContent="Read more";rd.setAttribute("aria-expanded","false");rd.setAttribute("aria-controls","b-"+a.id);
+    rd.onclick=()=>{const closed=body.classList.toggle("clamp");rd.textContent=closed?"Read more":"Show less";rd.setAttribute("aria-expanded",String(!closed))};
+    acts.append(listenBtn(a),rd);
+    el.append(metaEl(a),h,body,acts);list.appendChild(el);
+  });
+  const lt=$("latest");lt.textContent="";lt.hidden=!arts.length;
+  arts.slice(0,3).forEach(a=>{
+    const m=document.createElement("div");m.className="mini";
+    const h=document.createElement("h3");h.textContent=a.title;
+    const acts=document.createElement("div");acts.className="actions";
+    const go=document.createElement("a");go.className="btn line";go.href="#articles";go.textContent="Read";
+    acts.append(listenBtn(a),go);m.append(metaEl(a),h,acts);lt.appendChild(m);
+  });
+  $("latestEmpty").hidden=arts.length>0||(DATA.editions||[]).length>0;
+  setListenLabels();
+}
+function fixReadMore(){document.querySelectorAll("#list article").forEach(el=>{const b=el.querySelector(".body"),r=el.querySelector("[aria-controls]");if(b&&r&&b.classList.contains("clamp"))r.hidden=b.scrollHeight<=b.clientHeight+2})}
+
+// ---------- editions (PDF) ----------
+let pdfjsReady=null;const docCache={};
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+function getPdfjs(){
+  if(!pdfjsReady)pdfjsReady=(async()=>{
+    const B="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+    await loadScript(B+"pdf.min.js");await loadScript(B+"pdf.worker.min.js");
+    const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=B+"pdf.worker.min.js";return lib;
+  })().catch(e=>{pdfjsReady=null;throw e});
+  return pdfjsReady;
+}
+async function getDoc(ed){
+  if(!docCache[ed.id]){const lib=await getPdfjs();docCache[ed.id]=lib.getDocument({url:ed.pdf,isEvalSupported:false}).promise}
+  return docCache[ed.id];
+}
+async function drawPage(doc,n,cssWidth){
+  const page=await doc.getPage(n);const v1=page.getViewport({scale:1});
+  const scale=Math.min(cssWidth*Math.min(window.devicePixelRatio||1,2)/v1.width,3);
+  const v=page.getViewport({scale});const c=document.createElement("canvas");c.width=Math.floor(v.width);c.height=Math.floor(v.height);
+  await page.render({canvasContext:c.getContext("2d"),viewport:v}).promise;return c;
+}
+function coverEl(ed){
+  const b=document.createElement("button");b.type="button";b.className="cover";b.setAttribute("aria-label",`Open ${ed.title}`);
+  b.textContent="Loading cover…";b.onclick=()=>openReader(ed);
+  getDoc(ed).then(d=>drawPage(d,1,280)).then(c=>{b.textContent="";c.setAttribute("aria-hidden","true");b.appendChild(c)}).catch(()=>{b.textContent="Cover unavailable"});
+  return b;
+}
+function openBtn(ed){const b=document.createElement("button");b.type="button";b.className="btn coral";b.textContent="Read edition";b.onclick=()=>openReader(ed);return b}
+function dlLink(ed){const a=document.createElement("a");a.className="btn line";a.href=ed.pdf;a.target="_blank";a.rel="noopener";a.textContent="PDF ↗";a.setAttribute("aria-label",`Open the PDF of ${ed.title} in a new tab`);return a}
+function renderEditions(){
+  const eds=DATA.editions||[];
+  const g=$("issues");g.textContent="";$("issuesEmpty").hidden=eds.length>0;
+  eds.forEach(ed=>{
+    const c=document.createElement("div");c.className="edition";
+    const h=document.createElement("h3");h.textContent=ed.title;
+    const w=document.createElement("span");w.className="when";w.textContent=fmtIssue(ed.month);
+    const acts=document.createElement("div");acts.className="actions";acts.append(openBtn(ed),dlLink(ed));
+    c.append(coverEl(ed),h,w,acts);g.appendChild(c);
+  });
+  const he=$("homeEdition");he.textContent="";
+  const latest=eds[0];
+  if(latest){
+    const f=document.createElement("div");f.className="feature";
+    const copy=document.createElement("div");copy.className="copy";
+    const ey=document.createElement("span");ey.className="eyebrow";ey.textContent="Latest edition";
+    const h=document.createElement("h3");h.textContent=latest.title;
+    const w=document.createElement("span");w.className="when";w.textContent=fmtIssue(latest.month);
+    copy.append(ey,h,w,openBtn(latest));f.append(coverEl(latest),copy);he.appendChild(f);
+  }
+}
+let readerToken=0,lastFocus=null;
+async function openReader(ed){
+  lastFocus=document.activeElement;const tok=++readerToken;
+  $("rTitle").textContent=ed.title;$("rCount").textContent="";const P=$("rPages");P.textContent="";
+  const ld=document.createElement("p");ld.className="loading";ld.textContent="Opening edition…";P.appendChild(ld);
+  $("reader").hidden=false;document.body.style.overflow="hidden";$("rClose").focus();
+  try{
+    const doc=await getDoc(ed);if(tok!==readerToken)return;
+    $("rCount").textContent=doc.numPages+(doc.numPages===1?" page":" pages");
+    const w=Math.min(P.clientWidth-32,896);
+    for(let n=1;n<=doc.numPages;n++){
+      const c=await drawPage(doc,n,w);if(tok!==readerToken)return;
+      if(n===1)ld.remove();c.setAttribute("role","img");c.setAttribute("aria-label",`${ed.title}, page ${n} of ${doc.numPages}`);P.appendChild(c);
+    }
+  }catch(e){ld.textContent="This edition couldn’t be opened. Try the PDF link instead."}
+}
+function closeReader(){readerToken++;$("reader").hidden=true;document.body.style.overflow="";$("rPages").textContent="";if(lastFocus)try{lastFocus.focus()}catch(e){}}
+$("rClose").onclick=closeReader;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("reader").hidden)closeReader()});
+
+// ---------- load content ----------
+show();
+fetch("data.json",{cache:"no-cache"}).then(r=>r.json()).then(d=>{
+  DATA=Object.assign(DATA,d||{});
+  paintLogos();renderTeam();render();renderEditions();paintLogos();show();
+}).catch(()=>{render();renderEditions()});
+</script>
+</body>
+</html>
