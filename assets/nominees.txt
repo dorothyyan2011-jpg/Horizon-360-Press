@@ -1,0 +1,14 @@
+# Women at Work nominees for the Women at Work page.
+# Lines that start with # are notes and never show on the site.
+# Ask each woman before adding her name; this page is public.
+# Copy the example below, remove the # at the start of each line, and fill it in.
+# Put a line of three dashes (---) between nominees. Newest first.
+#
+# name: Maria Lopez
+# career: ER nurse
+# nominated by: Dorothy
+# link:
+# why: She has worked nights in the ER for twelve years and trains every new nurse on her floor.
+#
+# Leave "link:" empty until her story is out. Add the article or YouTube link then,
+# and her card changes from "Nominated" to "Featured".

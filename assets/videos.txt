@@ -1,0 +1,16 @@
+# Horizon on YouTube: videos for the Watch page.
+# Lines that start with # are notes and never show on the site.
+# Copy the example below, remove the # at the start of each line, and fill it in.
+# Put a line of three dashes (---) between videos. Newest video first.
+#
+# channel: https://www.youtube.com/@yourchannel
+# ---
+# title: Rapid Fire: an ER nurse
+# series: Rapid Fire
+# link: https://youtu.be/xxxxxxxxxxx
+# about: Ten quick questions for a nurse who works nights in the ER.
+# transcript:
+# Paste the words spoken in the video here.
+# It can be many lines long.
+#
+# Series you can use: Rapid Fire, A Day As…, Myth vs. Reality, We Tried It, Women at Work, Interview, Other

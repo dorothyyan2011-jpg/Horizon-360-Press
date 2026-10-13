@@ -24,7 +24,7 @@ Leave a blank line between paragraphs.
 
 5. Tap **Commit changes**. The article and its audio appear on the site in about 5 minutes.
 
-Sections you can use: Career spotlight, Interview, Organization partner, Club news, Opinion, Other.
+Sections you can use: Career spotlight, Women at Work, Interview, Organization partner, Club news, Opinion, Other.
 
 To **fix** an article, open its file, tap the pencil, edit, and commit. The audio is re-recorded automatically.
 To **delete** an article, open its file, tap the **⋯** menu, choose **Delete file**, and commit.
@@ -40,6 +40,40 @@ To **delete** an article, open its file, tap the **⋯** menu, choose **Delete f
 
 - **team.txt**: one person per line. Add a role after a dash, like `Dorothy - Founder & Editor-in-Chief`.
 - **contact.txt**: put the club email after `email:`.
+
+## Add a YouTube video (Watch page)
+
+1. Upload the video to YouTube first.
+2. Open the **assets** folder, then **videos.txt**, and tap the pencil.
+3. Add the video at the top (newest first), like this:
+
+```
+title: Rapid Fire: an ER nurse
+series: Rapid Fire
+link: https://youtu.be/xxxxxxxxxxx
+about: One sentence about the video.
+transcript:
+Paste the words spoken in the video.
+---
+```
+
+4. Tap **Commit changes**. Until there's a video, the Watch page shows "Coming soon."
+To add a "Visit our channel" button, put `channel: https://www.youtube.com/@yourchannel` on its own block at the top, followed by `---`.
+
+## Add a Women at Work nominee
+
+Ask her first; the page is public. Open **assets/nominees.txt**, tap the pencil, and add:
+
+```
+name: Her full name
+career: Her job
+nominated by: Your name
+link:
+why: One to three sentences about why we nominated her.
+---
+```
+
+When her story is out, paste the article or video link after `link:` and her card changes to **Featured**.
 
 ## Use your real logo
 
