@@ -334,6 +334,43 @@ footer a{color:var(--on-dark)}
 .foot-brand .logo{width:36px;height:36px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<style>
+.polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem 1.25rem;padding-block:.5rem 1rem}
+.polaroid{margin:0;background:#fffdf9;padding:.6rem .6rem 0;border-radius:4px;box-shadow:0 8px 24px rgba(60,30,10,.16);width:min(15rem,42vw);transform:rotate(var(--tilt,0deg));transition:transform .2s;position:relative}
+.polaroid:hover{transform:rotate(0) scale(1.03)}
+.polaroid::before{content:"";position:absolute;top:-.55rem;left:50%;width:4.2rem;height:1.1rem;transform:translateX(-50%) rotate(-3deg);background:rgba(246,174,142,.6);border-radius:2px}
+.polaroid img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;background:var(--cream)}
+.polaroid figcaption{font-family:var(--ui);font-size:.85rem;color:#3a2a20;text-align:center;padding:.55rem .25rem .7rem;min-height:1.4rem}
+@media (prefers-reduced-motion:reduce){.polaroid{transition:none}}
+html[data-calm] .polaroid{transform:none!important;box-shadow:none;border:1px solid var(--line)}
+html[data-calm] .polaroid::before{display:none}
+/* ---- motion & interaction ---- */
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+[data-panel]:not([hidden]){animation:panelIn .45s ease-out}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease-out,transform .6s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero .frame .logo{animation:floaty 7s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.85}50%{opacity:1}}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 76% 64%,rgba(255,190,150,.35),transparent 38%);animation:glow 6s ease-in-out infinite}
+.hero{position:relative}
+.hero .in{position:relative;z-index:1}
+.mini,article,.edition,.member,.way,.feature{transition:transform .25s ease,box-shadow .25s ease}
+.mini:hover,article:hover,.edition:hover,.member:hover,.way:hover,.feature:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(120,70,40,.14)}
+.btn{transition:transform .15s ease,filter .15s ease}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:scale(.96)}
+.tabs a{transition:background .2s,color .2s}
+.pill-ico,.ico{transition:transform .3s ease}
+.tile:hover .ico,.pillars > div:hover .pill-ico{transform:rotate(-8deg) scale(1.08)}
+.member .avatar{transition:transform .3s ease}
+.member:hover .avatar{transform:scale(1.08) rotate(-4deg)}
+@media (prefers-reduced-motion:reduce){[data-panel]:not([hidden]),.hero .frame .logo,.hero::after{animation:none}.rv{opacity:1;transform:none;transition:none}}
+html[data-calm] [data-panel]:not([hidden]),html[data-calm] .hero .frame .logo,html[data-calm] .hero::after{animation:none}
+html[data-calm] .hero::after{display:none}
+html[data-calm] .rv{opacity:1;transform:none;transition:none}
+html[data-calm] .mini:hover,html[data-calm] article:hover,html[data-calm] .edition:hover,html[data-calm] .member:hover,html[data-calm] .way:hover,html[data-calm] .feature:hover{transform:none;box-shadow:none}
+</style>
 </head>
 <body>
 
@@ -430,6 +467,11 @@ footer a{color:var(--on-dark)}
   </div>
   <svg class="band-edge bottom" viewBox="0 0 1200 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18C100 2 200 2 300 14S500 30 600 16 800 0 900 12 1100 28 1200 14V30H0Z"/></svg>
   </div>
+
+  <div class="section" id="photosSec" hidden><div class="in">
+    <div class="head"><span class="eyebrow">Moments</span><h2>Life at The Horizon</h2></div>
+    <div class="polaroids" id="photos"></div>
+  </div></div>
 
   <div class="section"><div class="in">
     <div class="head"><span class="eyebrow">Latest</span><h2>Recent reporting</h2><svg class="head-doodle" viewBox="0 0 64 48" aria-hidden="true"><path d="M8 8h40v32H14a6 6 0 0 1-6-6z"/><path d="M48 16h8v18a6 6 0 0 1-6 6"/><path d="M14 16h12v10H14zM30 16h12M30 21h12M30 26h12M14 32h28"/></svg></div>
@@ -705,11 +747,38 @@ function closeReader(){readerToken++;$("reader").hidden=true;document.body.style
 $("rClose").onclick=closeReader;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("reader").hidden)closeReader()});
 
+// ---------- decorative photos ----------
+function renderPhotos(){
+  const ph=DATA.photos||[];const g=$("photos");g.textContent="";$("photosSec").hidden=!ph.length;
+  const tilts=[-3,2,-1.5,3,-2.5,1.5];
+  ph.forEach((p,i)=>{
+    const f=document.createElement("figure");f.className="polaroid";f.style.setProperty("--tilt",tilts[i%tilts.length]+"deg");
+    const im=document.createElement("img");im.src=p.src;im.alt=p.caption||"Photo from The Horizon";im.loading="lazy";
+    const c=document.createElement("figcaption");c.textContent=p.caption||"";
+    f.append(im,c);g.appendChild(f);
+  });
+}
+
+// ---------- scroll reveal (only for things below the first screen) ----------
+const calmOrReduced=()=>document.documentElement.hasAttribute("data-calm")||matchMedia("(prefers-reduced-motion: reduce)").matches;
+let revealIO=null;
+function setupReveal(){
+  if(!("IntersectionObserver" in window)||calmOrReduced())return;
+  if(!revealIO)revealIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("on");revealIO.unobserve(e.target)}}),{rootMargin:"0px 0px -8% 0px"});
+  const vh=innerHeight;
+  document.querySelectorAll("[data-panel]:not([hidden]) :is(.tile,.pillars>div,.mini,article,.edition,.member,.way,.polaroid,.feature,.cta,.mission,.how>div,.head)").forEach((el,i)=>{
+    if(el.dataset.rv)return;el.dataset.rv="1";
+    if(el.getBoundingClientRect().top<vh*.9)return; // already on screen: leave visible
+    el.classList.add("rv");el.style.transitionDelay=(i%3)*80+"ms";revealIO.observe(el);
+  });
+}
+window.addEventListener("hashchange",()=>setTimeout(setupReveal,60));
+
 // ---------- load content ----------
 show();
 fetch("data.json",{cache:"no-cache"}).then(r=>r.json()).then(d=>{
   DATA=Object.assign(DATA,d||{});
-  paintLogos();renderTeam();render();renderEditions();paintLogos();show();
+  paintLogos();renderTeam();render();renderEditions();renderPhotos();paintLogos();show();setTimeout(setupReveal,60);
 }).catch(()=>{render();renderEditions()});
 </script>
 </body>

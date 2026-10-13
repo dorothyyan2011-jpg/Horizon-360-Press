@@ -135,9 +135,37 @@ def main():
 
     logo = next((p for p in sorted(glob.glob("assets/logo.*")) if p.lower().endswith((".png", ".jpg", ".jpeg", ".webp", ".svg"))), None)
 
+    photos = []
+    os.makedirs("photos/web", exist_ok=True)
+    for p in sorted(glob.glob("photos/*")):
+        if not p.lower().endswith((".jpg", ".jpeg", ".png", ".webp", ".heic")):
+            continue
+        stem = os.path.splitext(os.path.basename(p))[0]
+        web = f"photos/web/{slug(stem)}.jpg"
+        if not os.path.exists(web) or os.path.getmtime(web) < os.path.getmtime(p):
+            try:
+                from PIL import Image, ImageOps
+                try:
+                    import pillow_heif; pillow_heif.register_heif_opener()
+                except Exception:
+                    pass
+                im = ImageOps.exif_transpose(Image.open(p)).convert("RGB")
+                im.thumbnail((1200, 1200))
+                im.save(web, "JPEG", quality=82)
+            except Exception as e:
+                print("Could not resize", p, e)
+                web = p
+        caption = re.sub(r"^\d+[\s_-]*", "", stem).replace("_", " ").replace("-", " ").strip()
+        if re.fullmatch(r"(img|image|photo|dsc|pxl)?\s*\d*", caption.lower()):
+            caption = ""
+        photos.append({"src": web, "caption": caption})
+    for w in glob.glob("photos/web/*.jpg"):
+        if w not in {p["src"] for p in photos}:
+            os.remove(w)
+
     for x in articles + editions:
         x.pop("_added", None)
-    json.dump({"articles": articles, "editions": editions, "team": team, "contact": contact, "logo": logo},
+    json.dump({"articles": articles, "editions": editions, "team": team, "contact": contact, "logo": logo, "photos": photos},
               open("data.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"data.json: {len(articles)} articles, {len(editions)} editions, {len(team)} team members")
 
