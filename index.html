@@ -534,6 +534,7 @@ html[data-calm] .screen .sun{display:none}
 .her-mini b{display:block}
 .her-mini span{color:var(--ink-soft);font-size:.9rem}
 html[data-calm] .how-ww li{background:var(--paper);border:1px solid var(--line)}
+.aa-panel{position:fixed;left:auto;right:max(16px,calc((100vw - 70rem)/2 + 16px));top:5rem;width:min(22rem,calc(100vw - 32px));max-height:calc(100vh - 6rem);overflow-y:auto;overscroll-behavior:contain}
 
 .roles{display:grid}
 .join-alt{max-width:44rem;margin:1rem auto 0;text-align:center;color:var(--ink-soft);font-size:.95rem}
@@ -856,7 +857,9 @@ document.querySelectorAll("[data-sw]").forEach(b=>b.addEventListener("click",()=
 document.addEventListener("pointermove",e=>{if(!PREFS.guide)return;$("guide").style.transform=`translateY(${Math.max(0,e.clientY-18)}px)`},{passive:true});
 $("skipLink").addEventListener("click",e=>{e.preventDefault();const m=$("main");m.focus();m.scrollIntoView()});
 $("aaReset").addEventListener("click",()=>{PREFS={};savePrefs()});
-function setAa(open){$("aaPanel").hidden=!open;$("aaBtn").setAttribute("aria-expanded",String(open))}
+function placeAa(){const p=$("aaPanel");if(p.hidden)return;const r=$("aaBtn").getBoundingClientRect();const top=Math.max(8,r.bottom+8);p.style.top=top+"px";p.style.maxHeight=Math.max(200,window.innerHeight-top-16)+"px"}
+function setAa(open){$("aaPanel").hidden=!open;$("aaBtn").setAttribute("aria-expanded",String(open));placeAa()}
+window.addEventListener("resize",placeAa);window.addEventListener("scroll",placeAa,{passive:true});
 $("aaBtn").addEventListener("click",()=>setAa($("aaPanel").hidden));
 document.addEventListener("click",e=>{if(!$("aaPanel").hidden&&!e.target.closest(".aa"))setAa(false)});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("aaPanel").hidden){setAa(false);$("aaBtn").focus()}});
