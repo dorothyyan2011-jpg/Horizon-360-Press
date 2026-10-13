@@ -1,0 +1,19 @@
+name: Publish site
+on:
+  push: {branches: [main]}
+  workflow_dispatch:
+permissions: {contents: write, pages: write, id-token: write}
+concurrency: publish
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: if [ -f site.zip ]; then unzip -oq site.zip && rm site.zip; fi; bash scripts/ci.sh
+      - uses: actions/upload-pages-artifact@v3
+        with: {path: _site}
+      - uses: actions/deploy-pages@v4
